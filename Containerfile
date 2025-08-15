@@ -1,10 +1,11 @@
-FROM docker.io/debian:bookworm
+FROM docker.io/alpine:3.22.1
 
-RUN apt-get update
-RUN apt-get install -y \
+RUN apk add --no-cache \
     git \
     make \
-    gcc 
+    gcc \
+    musl-dev \
+    linux-headers
 RUN git clone https://github.com/z3APA3A/3proxy.git /3proxy \
     && cd /3proxy \
     && make -f Makefile.Linux
