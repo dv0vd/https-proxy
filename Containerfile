@@ -5,13 +5,15 @@ RUN apk add --no-cache \
     make \
     gcc \
     musl-dev \
-    linux-headers
+    linux-headers \
+    gettext
 RUN git clone https://github.com/z3APA3A/3proxy.git /3proxy \
     && cd /3proxy \
     && make -f Makefile.Linux
 
-COPY ./proxy.cfg /3proxy/conf/3proxy.cfg
+COPY ./proxy_env.cfg /app/proxy_env.cfg
+COPY ./entrypoint.sh /app/entrypoint.sh
 
 EXPOSE 3128
 
-ENTRYPOINT ["/3proxy/bin/3proxy", "/3proxy/conf/3proxy.cfg"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
